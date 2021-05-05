@@ -6,22 +6,27 @@ let skeleton;
 let brain;
 let poseLabel = "";
 
-let state = 'waiting';
+let state;
 let targetLabel;
+let squat;
+let jack;
 
 function keyPressed() {
-  if (key == 't') {
-    brain.normalizeData();
-    brain.train({epochs: 50}, finished); 
-  } else if (key == 's') {
+  // if (key == 't') {
+  //   brain.normalizeData();
+  //   brain.train({
+  //     epochs: 50
+  //   }, finished);
+  // } else
+  if (key == 's') {
     brain.saveData();
   } else {
     targetLabel = key;
     console.log(targetLabel);
-    setTimeout(function() {
+    setTimeout(function () {
       console.log('collecting');
       state = 'collecting';
-      setTimeout(function() {
+      setTimeout(function () {
         console.log('not collecting');
         state = 'waiting';
       }, 2000);
@@ -44,7 +49,37 @@ function setup() {
     debug: true
   }
   brain = ml5.neuralNetwork(options);
-  
+  let sq = document.getElementById("sq");
+  let ja = document.getElementById("ja");
+  console.log(sq);
+  sq.addEventListener("click", () => {
+    // alert('hello');
+    setTimeout(function () {
+      console.log('collecting');
+      targetLabel = 'squat'
+      state = 'collecting'
+      console.log(targetLabel);
+      setTimeout(function () {
+        console.log('not collecting');
+        state = 'waiting'
+      }, 10000)
+    }, 10000);
+  });
+  ja.addEventListener("click", () => {
+    // alert('hello');
+    setTimeout(function () {
+      console.log('collecting');
+      targetLabel = 'jack'
+      state = 'collecting'
+      console.log(targetLabel);
+      setTimeout(function () {
+        console.log('not collecting');
+        state = 'waiting'
+      }, 10000)
+    }, 10000);
+  });
+
+
   // LOAD PRETRAINED MODEL
   // const modelInfo = {
   //   model: 'model2/model.json',
@@ -77,7 +112,7 @@ function classifyPose() {
   }
 }
 
-function gotResult(error, results) {  
+function gotResult(error, results) {
   if (results[0].confidence > 0.75) {
     poseLabel = results[0].label.toUpperCase();
   }
@@ -156,5 +191,7 @@ function draw() {
   noStroke();
   textSize(512);
   textAlign(CENTER, CENTER);
-  text(poseLabel, width / 2, height / 2);
+  // text(poseLabel, width / 2, height / 2);
+
+  let h5 = createElement('h5', poseLabel);
 }

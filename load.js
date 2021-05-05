@@ -25,6 +25,7 @@ function setup() {
     metadata: 'model_meta.json',
     weights: 'model.weights.bin',
   };
+
   brain.load(modelInfo, brainLoaded);
 }
 
@@ -49,11 +50,14 @@ function classifyPose() {
 }
 
 function gotResult(error, results) {
-  
-  if (results[0].confidence > 0.75) {
+
+  if (results[0].confidence > 0.85) {
     poseLabel = results[0].label.toUpperCase();
+    // console.log(results[0].label);
+    // console.log(results[0].confidence);
   }
-  //console.log(results[0].confidence);
+
+
   classifyPose();
 }
 
@@ -100,4 +104,5 @@ function draw() {
   textSize(512);
   textAlign(CENTER, CENTER);
   text(poseLabel, width / 2, height / 2);
+
 }
