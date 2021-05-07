@@ -32,6 +32,22 @@ function setup() {
   brain.load(modelInfo, brainLoaded);
 
 
+
+  // noLoop();
+  setInterval(checkPose, 1000)
+
+
+
+}
+
+function checkPose() {
+  if (poseLabel.toLocaleLowerCase() == "sqaut") {
+    c++;
+    console.log(c);
+
+  }
+
+
 }
 
 function brainLoaded() {
@@ -103,11 +119,17 @@ function draw() {
   // }
   pop();
 
-  fill(255, 0, 255);
+  fill(255);
   noStroke();
-  textSize(150);
-  textAlign(CENTER, CENTER);
-  text(poseLabel, width / 2, height / 2);
+  textSize(50);
+  // textAlign(CENTER, CENTER);
+  // text(poseLabel, width / 2, height / 2);
 
+  if (c >= 5) {
+    text("You did it!", 100, 100)
+
+  } else {
+    text("Keep going!", 100, 100)
+  }
 
 }
