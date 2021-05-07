@@ -5,6 +5,9 @@ let skeleton;
 
 let brain;
 let poseLabel = "";
+let c = 0;
+let j = 0;
+
 
 function setup() {
   createCanvas(640, 480);
@@ -21,12 +24,14 @@ function setup() {
   }
   brain = ml5.neuralNetwork(options);
   const modelInfo = {
-    model: 'model.json',
-    metadata: 'model_meta.json',
-    weights: 'model.weights.bin',
+    model: '/model/v3/model.json',
+    metadata: '/model/v3/model_meta.json',
+    weights: '/model/v3/model.weights.bin',
   };
 
   brain.load(modelInfo, brainLoaded);
+
+
 }
 
 function brainLoaded() {
@@ -51,10 +56,9 @@ function classifyPose() {
 
 function gotResult(error, results) {
 
-  if (results[0].confidence > 0.85) {
+  if (results[0].confidence > 0.95) {
     poseLabel = results[0].label.toUpperCase();
-    // console.log(results[0].label);
-    // console.log(results[0].confidence);
+
   }
 
 
@@ -80,29 +84,30 @@ function draw() {
   scale(-1, 1);
   image(video, 0, 0, video.width, video.height);
 
-  if (pose) {
-    for (let i = 0; i < skeleton.length; i++) {
-      let a = skeleton[i][0];
-      let b = skeleton[i][1];
-      strokeWeight(2);
-      stroke(0);
+  // if (pose) {
+  //   for (let i = 0; i < skeleton.length; i++) {
+  //     let a = skeleton[i][0];
+  //     let b = skeleton[i][1];
+  //     strokeWeight(2);
+  //     stroke(0);
 
-      line(a.position.x, a.position.y, b.position.x, b.position.y);
-    }
-    for (let i = 0; i < pose.keypoints.length; i++) {
-      let x = pose.keypoints[i].position.x;
-      let y = pose.keypoints[i].position.y;
-      fill(0);
-      stroke(255);
-      ellipse(x, y, 16, 16);
-    }
-  }
+  //     line(a.position.x, a.position.y, b.position.x, b.position.y);
+  //   }
+  //   for (let i = 0; i < pose.keypoints.length; i++) {
+  //     let x = pose.keypoints[i].position.x;
+  //     let y = pose.keypoints[i].position.y;
+  //     fill(0);
+  //     stroke(255);
+  //     ellipse(x, y, 16, 16);
+  //   }
+  // }
   pop();
 
   fill(255, 0, 255);
   noStroke();
-  textSize(512);
+  textSize(150);
   textAlign(CENTER, CENTER);
   text(poseLabel, width / 2, height / 2);
+
 
 }

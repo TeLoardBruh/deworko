@@ -8,8 +8,10 @@ let poseLabel = "";
 
 let state;
 let targetLabel;
-let squat;
-let jack;
+let squat_u;
+let squat_d;
+let jack_u;
+let jack_d;
 
 function keyPressed() {
   // if (key == 't') {
@@ -20,17 +22,6 @@ function keyPressed() {
   // } else
   if (key == 's') {
     brain.saveData();
-  } else {
-    targetLabel = key;
-    console.log(targetLabel);
-    setTimeout(function () {
-      console.log('collecting');
-      state = 'collecting';
-      setTimeout(function () {
-        console.log('not collecting');
-        state = 'waiting';
-      }, 2000);
-    }, 1000);
   }
 }
 
@@ -49,14 +40,16 @@ function setup() {
     debug: true
   }
   brain = ml5.neuralNetwork(options);
-  let sq = document.getElementById("sq");
-  let ja = document.getElementById("ja");
+  let sq_u = document.getElementById("sq_u");
+  let sq_d = document.getElementById("sq_d");
+  let ja_u = document.getElementById("ja_u");
+  let ja_d = document.getElementById("ja_d");
   console.log(sq);
-  sq.addEventListener("click", () => {
+  sq_u.addEventListener("click", () => {
     // alert('hello');
     setTimeout(function () {
       console.log('collecting');
-      targetLabel = 'squat'
+      targetLabel = 'sqaut'
       state = 'collecting'
       console.log(targetLabel);
       setTimeout(function () {
@@ -65,11 +58,37 @@ function setup() {
       }, 10000)
     }, 10000);
   });
-  ja.addEventListener("click", () => {
+  sq_d.addEventListener("click", () => {
+    // alert('hello');
+    setTimeout(function () {
+      console.log('collecting');
+      targetLabel = 'sq_d'
+      state = 'collecting'
+      console.log(targetLabel);
+      setTimeout(function () {
+        console.log('not collecting');
+        state = 'waiting'
+      }, 10000)
+    }, 10000);
+  });
+  ja_u.addEventListener("click", () => {
     // alert('hello');
     setTimeout(function () {
       console.log('collecting');
       targetLabel = 'jack'
+      state = 'collecting'
+      console.log(targetLabel);
+      setTimeout(function () {
+        console.log('not collecting');
+        state = 'waiting'
+      }, 10000)
+    }, 10000);
+  });
+  ja_d.addEventListener("click", () => {
+    // alert('hello');
+    setTimeout(function () {
+      console.log('collecting');
+      targetLabel = 'ja_d'
       state = 'collecting'
       console.log(targetLabel);
       setTimeout(function () {
@@ -139,8 +158,10 @@ function finished() {
 
 
 function gotPoses(poses) {
+  
   // console.log(poses); 
   if (poses.length > 0) {
+    
     pose = poses[0].pose;
     skeleton = poses[0].skeleton;
     if (state == 'collecting') {
