@@ -5,8 +5,9 @@ let skeleton;
 
 let brain;
 let poseLabel = "";
-let c = 0;
-let j = 0;
+let poseArray = ["sqaut", "jack"]
+let workoutMovement = 0;
+let poseCounter = 0;
 
 
 function setup() {
@@ -24,9 +25,9 @@ function setup() {
   }
   brain = ml5.neuralNetwork(options);
   const modelInfo = {
-    model: '/model/v3/model.json',
-    metadata: '/model/v3/model_meta.json',
-    weights: '/model/v3/model.weights.bin',
+    model: '/model/v6/model.json',
+    metadata: '/model/v6/model_meta.json',
+    weights: '/model/v6/model.weights.bin',
   };
 
   brain.load(modelInfo, brainLoaded);
@@ -41,10 +42,25 @@ function setup() {
 }
 
 function checkPose() {
-  if (poseLabel.toLocaleLowerCase() == "sqaut") {
-    c++;
-    console.log(c);
+  if (poseLabel.toLocaleLowerCase() == poseArray[poseCounter]) {
+    workoutMovement++;
+    // console.log('outer : ', workoutMovement);
+    console.log(workoutMovement);
+    if (workoutMovement >= 5) {
+      console.log("posecounter", poseCounter);
+      setTimeout(() => {
+        poseCounter++;
 
+        workoutMovement = 0;
+
+      }, 1000)
+      console.log("workoutMovement", workoutMovement);
+
+    }
+
+
+  } else if (poseCounter >= poseArray.length) {
+    poseCounter = 0;
   }
 
 
@@ -122,10 +138,10 @@ function draw() {
   fill(255);
   noStroke();
   textSize(50);
-  // textAlign(CENTER, CENTER);
-  // text(poseLabel, width / 2, height / 2);
+  textAlign(CENTER, CENTER);
+  text(poseLabel, width / 2, height / 2);
 
-  if (c >= 5) {
+  if (workoutMovement >= 5) {
     text("You did it!", 100, 100)
 
   } else {

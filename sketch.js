@@ -40,11 +40,25 @@ function setup() {
     debug: true
   }
   brain = ml5.neuralNetwork(options);
+  let start = document.getElementById("start");
   let sq_u = document.getElementById("sq_u");
   let sq_d = document.getElementById("sq_d");
   let ja_u = document.getElementById("ja_u");
   let ja_d = document.getElementById("ja_d");
-  console.log(sq);
+  // console.log(sq);
+  start.addEventListener("click", () => {
+    // alert('hello');
+    setTimeout(function () {
+      console.log('collecting');
+      targetLabel = 'start'
+      state = 'collecting'
+      console.log(targetLabel);
+      setTimeout(function () {
+        console.log('not collecting');
+        state = 'waiting'
+      }, 10000)
+    }, 10000);
+  });
   sq_u.addEventListener("click", () => {
     // alert('hello');
     setTimeout(function () {
@@ -158,10 +172,10 @@ function finished() {
 
 
 function gotPoses(poses) {
-  
+
   // console.log(poses); 
   if (poses.length > 0) {
-    
+
     pose = poses[0].pose;
     skeleton = poses[0].skeleton;
     if (state == 'collecting') {
