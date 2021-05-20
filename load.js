@@ -5,7 +5,7 @@ let skeleton;
 
 let brain;
 let poseLabel = "";
-let poseArray = ["sqaut", "jack"]
+let poseArray = ["start", "sqaut", "jack", "high_knees"]
 let workoutMovement = 0;
 let poseCounter = 0;
 
@@ -25,9 +25,9 @@ function setup() {
   }
   brain = ml5.neuralNetwork(options);
   const modelInfo = {
-    model: '/model/v6/model.json',
-    metadata: '/model/v6/model_meta.json',
-    weights: '/model/v6/model.weights.bin',
+    model: '/model/v10/model.json',
+    metadata: '/model/v10/model_meta.json',
+    weights: '/model/v10/model.weights.bin',
   };
 
   brain.load(modelInfo, brainLoaded);
@@ -48,12 +48,10 @@ function checkPose() {
     console.log(workoutMovement);
     if (workoutMovement >= 5) {
       console.log("posecounter", poseCounter);
-      setTimeout(() => {
-        poseCounter++;
+      poseCounter++;
 
-        workoutMovement = 0;
+      workoutMovement = 0;
 
-      }, 1000)
       console.log("workoutMovement", workoutMovement);
 
     }
@@ -87,8 +85,8 @@ function classifyPose() {
 }
 
 function gotResult(error, results) {
-
-  if (results[0].confidence > 0.95) {
+  // console.log(results);
+  if (results[0].confidence > 0.70) {
     poseLabel = results[0].label.toUpperCase();
 
   }
@@ -116,23 +114,23 @@ function draw() {
   scale(-1, 1);
   image(video, 0, 0, video.width, video.height);
 
-  // if (pose) {
-  //   for (let i = 0; i < skeleton.length; i++) {
-  //     let a = skeleton[i][0];
-  //     let b = skeleton[i][1];
-  //     strokeWeight(2);
-  //     stroke(0);
+  if (pose) {
+    for (let i = 0; i < skeleton.length; i++) {
+      let a = skeleton[i][0];
+      let b = skeleton[i][1];
+      strokeWeight(5);
+      stroke(85, 224, 16);
 
-  //     line(a.position.x, a.position.y, b.position.x, b.position.y);
-  //   }
-  //   for (let i = 0; i < pose.keypoints.length; i++) {
-  //     let x = pose.keypoints[i].position.x;
-  //     let y = pose.keypoints[i].position.y;
-  //     fill(0);
-  //     stroke(255);
-  //     ellipse(x, y, 16, 16);
-  //   }
-  // }
+      line(a.position.x, a.position.y, b.position.x, b.position.y);
+    }
+    for (let i = 5; i < pose.keypoints.length; i++) {
+      let x = pose.keypoints[i].position.x;
+      let y = pose.keypoints[i].position.y;
+      fill(0);
+      stroke(85, 224, 16);
+      ellipse(x, y, 16, 16);
+    }
+  }
   pop();
 
   fill(255);

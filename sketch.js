@@ -14,20 +14,18 @@ let jack_u;
 let jack_d;
 
 function keyPressed() {
-  // if (key == 't') {
-  //   brain.normalizeData();
-  //   brain.train({
-  //     epochs: 50
-  //   }, finished);
-  // } else
+
   if (key == 's') {
-    brain.saveData();
+    brain.saveData('userDataSet');
+
   }
 }
 
+
+
 function setup() {
   let div = createCanvas(900, 700);
-  div.addClass('container mx-auto px-4')
+  // div.addClass('container mx-auto px-4')
   video = createCapture(VIDEO);
   video.hide();
   poseNet = ml5.poseNet(video, modelLoaded);
@@ -41,10 +39,9 @@ function setup() {
   }
   brain = ml5.neuralNetwork(options);
   let start = document.getElementById("start");
-  let sq_u = document.getElementById("sq_u");
-  let sq_d = document.getElementById("sq_d");
-  let ja_u = document.getElementById("ja_u");
-  let ja_d = document.getElementById("ja_d");
+  let sq = document.getElementById("sq");
+  let ja = document.getElementById("ja");
+  let hk = document.getElementById("hk");
   // console.log(sq);
   start.addEventListener("click", () => {
     // alert('hello');
@@ -59,7 +56,7 @@ function setup() {
       }, 10000)
     }, 10000);
   });
-  sq_u.addEventListener("click", () => {
+  sq.addEventListener("click", () => {
     // alert('hello');
     setTimeout(function () {
       console.log('collecting');
@@ -72,20 +69,7 @@ function setup() {
       }, 10000)
     }, 10000);
   });
-  sq_d.addEventListener("click", () => {
-    // alert('hello');
-    setTimeout(function () {
-      console.log('collecting');
-      targetLabel = 'sq_d'
-      state = 'collecting'
-      console.log(targetLabel);
-      setTimeout(function () {
-        console.log('not collecting');
-        state = 'waiting'
-      }, 10000)
-    }, 10000);
-  });
-  ja_u.addEventListener("click", () => {
+  ja.addEventListener("click", () => {
     // alert('hello');
     setTimeout(function () {
       console.log('collecting');
@@ -98,11 +82,10 @@ function setup() {
       }, 10000)
     }, 10000);
   });
-  ja_d.addEventListener("click", () => {
-    // alert('hello');
+  hk.addEventListener("click", () => {
     setTimeout(function () {
       console.log('collecting');
-      targetLabel = 'ja_d'
+      targetLabel = 'high_knees'
       state = 'collecting'
       console.log(targetLabel);
       setTimeout(function () {
@@ -110,19 +93,7 @@ function setup() {
         state = 'waiting'
       }, 10000)
     }, 10000);
-  });
-
-
-  // LOAD PRETRAINED MODEL
-  // const modelInfo = {
-  //   model: 'model2/model.json',
-  //   metadata: 'model2/model_meta.json',
-  //   weights: 'model2/model.weights.bin',
-  // };
-  // brain.load(modelInfo, brainLoaded);
-
-  // LOAD TRAINING DATA
-  // brain.loadData('ymca.json', dataReady);
+  })
 }
 
 function brainLoaded() {
@@ -208,7 +179,7 @@ function draw() {
       let a = skeleton[i][0];
       let b = skeleton[i][1];
       strokeWeight(2);
-      stroke(0);
+      stroke(85, 224, 16);
 
       line(a.position.x, a.position.y, b.position.x, b.position.y);
     }
@@ -216,7 +187,7 @@ function draw() {
       let x = pose.keypoints[i].position.x;
       let y = pose.keypoints[i].position.y;
       fill(0);
-      stroke(255);
+      stroke(85, 224, 16);
       ellipse(x, y, 16, 16);
     }
   }
@@ -228,5 +199,4 @@ function draw() {
   textAlign(CENTER, CENTER);
   // text(poseLabel, width / 2, height / 2);
 
-  let h5 = createElement('h5', poseLabel);
 }
