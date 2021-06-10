@@ -34,7 +34,7 @@ let timer = 5;
 let sec = 0;
 let counter = 0;
 let d_prev = 0;
-let pCount = 7;
+let pCount = 1;
 let count = 0;
 let state;
 let sumAve = 0;
@@ -143,9 +143,9 @@ function calPose() {
     // let angleBetween = v0.angleBetween(v1);
     // console.log(d);
     if (poseArray[pCount] == "sqaut") {
-        let d = dist(rightHipX, rightHipY, rightKneeX, rightKneeY);
+        let d = parseInt(dist(rightHipX, rightHipY, rightKneeX, rightKneeY));
         // console.log("in here");
-        if (d < 90) {
+        if (d < 95) {
             stroke(0, 255, 0);
         } else {
             stroke(255, 0, 0);
@@ -171,8 +171,10 @@ function calPose() {
         fill(255);
         if (count >= 5) {
             // text("You did it!", 100, 100);
+            count = 0;
             pCount++;
             ave();
+
             console.log("suc");
 
 
@@ -185,8 +187,10 @@ function calPose() {
         // console.log(d);
 
     } else if (poseArray[pCount] == "jack") {
-        let d = dist(rightHipX, rightHipY, rightShoulderX, rightShoulderY);
-        if (d < 60) {
+
+        console.log('in jack');
+        let d = parseInt(dist(rightHipX, rightHipY, rightShoulderX, rightShoulderY));
+        if (d < 100) {
 
             stroke(0, 255, 0);
         } else {
@@ -197,7 +201,7 @@ function calPose() {
         textSize(50);
         text(d, rightHipX, rightHipY);
         // if a squat is detected (when someone sits down, and up), increase the counter by 1
-        if (d < 60 && d_prev >= 100) {
+        if (d < 100 && d_prev >= 100) {
             count++;
             console.log(count);
             // console.log("d_prev" + d_prev);
@@ -208,6 +212,7 @@ function calPose() {
         textSize(50);
         fill(255);
         if (count >= 10) {
+            count = 0;
             // text("You did it!", 100, 100);
             pCount++;
             console.log("suc");
@@ -250,6 +255,7 @@ function calPose() {
         fill(255);
         if (count >= 5) {
             // text("You did it!", 100, 100);
+            count = 0;
             pCount++;
             console.log("suc");
         } else {
@@ -291,6 +297,7 @@ function calPose() {
         fill(255);
         if (count >= 5) {
             // text("You did it!", 100, 100);
+            count = 0;
             pCount++;
             console.log("suc");
         } else {
@@ -324,6 +331,7 @@ function calPose() {
         fill(255);
         if (count >= 5) {
             // text("You did it!", 100, 100);
+            count = 0;
             pCount++;
             console.log("suc");
         } else {
@@ -358,6 +366,7 @@ function calPose() {
         fill(255);
         if (count >= 5) {
             // text("You did it!", 100, 100);
+            count = 0;
             pCount++;
             console.log("suc");
         } else {
@@ -398,6 +407,7 @@ function calPose() {
         fill(255);
         if (count >= 5) {
             // text("You did it!", 100, 100);
+            count = 0;
             pCount++;
             console.log("suc");
         } else {
@@ -407,7 +417,7 @@ function calPose() {
         // console.log(counter);
         // console.log(d);
     } else if (poseArray[pCount] == "lateral_shuffles") {
-        let d = parseInt(dist(rightHipX, rightHipY, rightKneeX, rightKneeY));
+        let d = parseInt(dist(rightKneeX, rightKneeY, leftKneeX, leftKneeY));
 
         if (d < 80) {
 
@@ -420,7 +430,7 @@ function calPose() {
         textSize(50);
         text(d, rightHipX, rightHipY);
         // if a squat is detected (when someone sits down, and up), increase the counter by 1
-        if (d < 80 && d_prev >= 100) {
+        if (d < 100 && d_prev >= 100) {
             count++;
             console.log(count);
             // console.log("d_prev" + d_prev);
@@ -432,6 +442,7 @@ function calPose() {
         fill(255);
         if (count >= 5) {
             // text("You did it!", 100, 100);
+            count = 0;
             pCount++;
             console.log("suc");
         } else {
