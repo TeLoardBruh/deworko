@@ -28,6 +28,7 @@ function setup() {
   // div.addClass('container mx-auto px-4')
   video = createCapture(VIDEO);
   video.hide();
+  video.size(width, height);
   poseNet = ml5.poseNet(video, modelLoaded);
   poseNet.on('pose', gotPoses);
 

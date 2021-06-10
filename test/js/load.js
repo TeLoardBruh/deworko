@@ -26,9 +26,9 @@ function setup() {
   }
   brain = ml5.neuralNetwork(options);
   const modelInfo = {
-    model: '/model/v10/model.json',
-    metadata: '/model/v10/model_meta.json',
-    weights: '/model/v10/model.weights.bin',
+    model: './data/model.json',
+    metadata: './data/model_meta.json',
+    weights: './data/model.weights.bin',
   };
 
   brain.load(modelInfo, brainLoaded);
@@ -100,7 +100,6 @@ function gotResult(error, results) {
 function gotPoses(poses) {
   if (poses.length > 0) {
     pose = poses[0].pose;
-    
     skeleton = poses[0].skeleton;
   }
 }
